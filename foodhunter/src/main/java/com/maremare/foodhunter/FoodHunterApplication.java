@@ -10,10 +10,6 @@ public class FoodHunterApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FoodHunterApplication.class, args);
-
-		IcaScraper ica = new IcaScraper();
-
-		ica.icaWebScrapePage();
 	}
 
 }
