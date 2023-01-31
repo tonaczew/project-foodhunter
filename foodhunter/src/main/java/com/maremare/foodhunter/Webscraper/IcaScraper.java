@@ -27,7 +27,7 @@ public class IcaScraper {
         return content;
     }
 
-    private void scrapeContent(List<String> shoppingList) {
+    public List<Article> scrapeContent(List<String> shoppingList) {
         double totalAmount = 0.0;
         try (final WebClient webClient = new WebClient()) {
             webClient.getOptions().setJavaScriptEnabled(false);
@@ -58,6 +58,7 @@ public class IcaScraper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return articles;
     }
 
     private double convertPrice(String textContent) {
