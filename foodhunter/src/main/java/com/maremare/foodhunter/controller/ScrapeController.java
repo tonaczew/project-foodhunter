@@ -1,7 +1,5 @@
 package com.maremare.foodhunter.controller;
 
-import com.maremare.foodhunter.Article;
-import com.maremare.foodhunter.ShoppingList;
 import com.maremare.foodhunter.service.ScrapeService;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://127.0.0.1:8080", maxAge = 3600)
