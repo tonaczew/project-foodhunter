@@ -18,7 +18,7 @@ public class ScrapeRepository {
         this.icaRepository = icaRepository;
     }
 
-    public List<Article> webscraping(List<String> products) {
+    public List<Article> webScrapingIca(List<String> products) {
         return icaRepository.webScrapeIca(products);
     }
 }

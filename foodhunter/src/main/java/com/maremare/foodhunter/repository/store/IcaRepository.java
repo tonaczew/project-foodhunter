@@ -13,10 +13,9 @@ import java.util.List;
 public class IcaRepository {
 
     final String url = "https://handlaprivatkund.ica.se/stores/1003418/";
-    final List<Article> articles = new ArrayList<>();
-
 
     public List<Article> webScrapeIca(List<String> shoppingList) {
+        List<Article> articles = new ArrayList<>();
         try (final WebClient webClient = new WebClient()) {
             webClient.getOptions().setJavaScriptEnabled(false);
             webClient.getOptions().setCssEnabled(false);

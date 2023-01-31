@@ -8,10 +8,14 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ScrapeService {
+    enum Store {
+        ICA
+    }
 
     final ScrapeRepository scrapeRepository;
 
@@ -21,18 +25,23 @@ public class ScrapeService {
     }
 
     public JSONArray getProducts(List<String> products) {
-        List<Article> article = scrapeRepository.webscraping(products);
-        ShoppingList shopList = new ShoppingList("Ica", article);
+        List<ShoppingList> shopList = new ArrayList<>();
+        for (Store store : Store.values()) {
+            List<Article> article = scrapeRepository.webScrapingIca(products);
+            shopList.add(new ShoppingList(store.name(), article));
+        }
         return createJsonObject(shopList);
     }
 
-    private JSONArray createJsonObject(ShoppingList sl) {
-        JSONArray ja = new JSONArray();
-        JSONObject jo = new JSONObject();
-        jo.put("store", sl.getStore());
-        jo.put("shoppingList", sl.getShoppingList());
-        ja.put(jo);
-        System.out.println(ja);
-        return ja;
+    private JSONArray createJsonObject(List<ShoppingList> sl) {
+        JSONArray jsonArray = new JSONArray();
+        for (ShoppingList storeList : sl) {
+            JSONObject jsonArticleObject = new JSONObject();
+            jsonArticleObject.put("store", storeList.getStore());
+            jsonArticleObject.put("shoppingList", storeList.getShoppingList());
+            jsonArray.put(jsonArticleObject);
+        }
+        System.out.println(jsonArray);
+        return jsonArray;
     }
 }
