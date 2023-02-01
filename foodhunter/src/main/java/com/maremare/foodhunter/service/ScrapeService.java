@@ -15,7 +15,7 @@ import java.util.Map;
 @Service
 public class ScrapeService {
     enum Store {
-        ICA
+        ICA, HEMKÖP
     }
 
     final ScrapeRepository scrapeRepository;

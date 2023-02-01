@@ -26,14 +26,20 @@ public class HemkopRepository {
         WebDriver driver = new ChromeDriver(chromeOptions);
 
         for (String product : shoppingList) {
-            driver.get("https://www.hemkop.se/sok?q=" + product);
-            String xPathProduct = "//*[@id='__next']/div[1]/div[5]/div/div[2]/div/div[3]/div[1]/div/div[1]/div[2]/div[2]/div/div/a";
-            String xPathPrice = "//*[@id=\"__next\"]/div[1]/div[5]/div/div[2]/div/div[3]/div[1]/div/div[1]/div[3]/div/div/h3";
+            try{
+                driver.get("https://www.hemkop.se/sok?q=" + product);
+                String xPathProduct = "//*[@id='__next']/div[1]/div[5]/div/div[2]/div/div[3]/div[1]/div/div[1]/div[2]/div[2]/div/div/a";
+                String xPathPrice = "//*[@id=\"__next\"]/div[1]/div[5]/div/div[2]/div/div[3]/div[1]/div/div[1]/div[3]/div/div/h3";
 
-            WebElement article = driver.findElement(By.xpath(xPathProduct));
-            WebElement price = driver.findElement(By.xpath(xPathPrice));
+                WebElement article = driver.findElement(By.xpath(xPathProduct));
+                WebElement price = driver.findElement(By.xpath(xPathPrice));
 
-            responseData.put(article.getText(),price.getText());
+                responseData.put(article.getText(),price.getText());
+
+            } catch(Exception NoSuchElementException){
+                System.out.println("EXEPTION NoSuchElementException");
+                responseData.put("Ingen sökträff: " + product, "-");
+            }
         }
         return responseData;
     }

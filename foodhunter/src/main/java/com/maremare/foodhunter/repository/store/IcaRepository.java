@@ -35,7 +35,7 @@ public class IcaRepository {
 
                 } catch(Exception IndexOutOfBoundsException){
                     System.out.println("EXEPTION IndexOutOfBoundsException");
-                    responseData.put("Ingen sökträff", "-");
+                    responseData.put("Ingen sökträff: " + product, "-");
                 }
 
             }
