@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ScrapeService {
     enum Store {
-        ICA
+        ICA, HEMKÖP
     }
 
     final ScrapeRepository scrapeRepository;
@@ -26,9 +26,20 @@ public class ScrapeService {
 
     public JSONArray getProducts(List<String> products) {
         List<ShoppingList> shopList = new ArrayList<>();
+        List<Article> articleIca;
+        List<Article> articleHemkop;
+
         for (Store store : Store.values()) {
-            List<Article> article = scrapeRepository.webScrapingIca(products);
-            shopList.add(new ShoppingList(store.name(), article));
+            switch (store.name()) {
+                case "ICA" -> {
+                    articleIca = scrapeRepository.webScrapingIca(products);
+                    shopList.add(new ShoppingList(store.name(), articleIca));
+                }
+                case "HEMKÖP" -> {
+                    articleHemkop = scrapeRepository.webScrapingHemkop(products);
+                    shopList.add(new ShoppingList(store.name(), articleHemkop));
+                }
+            }
         }
         return createJsonObject(shopList);
     }

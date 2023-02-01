@@ -34,10 +34,6 @@ public class IcaRepository {
                 double cleanedPrice = convertPrice(productPrice.getTextContent());
                 articles.add(new Article(productContent.getTextContent(), cleanedPrice));
             }
-
-            for (Article a : articles) {
-                System.out.printf("Product: %s\n Price: %s\n", a.getProductName(), a.getPrice());
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
