@@ -3,9 +3,9 @@ package com.maremare.foodhunter;
 public class Article {
 
     private final String productName;
-    private final double price;
+    private final String price;
 
-    public Article(String productName, double price) {
+    public Article(String productName, String price) {
         this.productName = productName;
         this.price = price;
     }
@@ -14,7 +14,7 @@ public class Article {
         return productName;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 

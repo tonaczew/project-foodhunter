@@ -6,7 +6,6 @@ import com.maremare.foodhunter.Article;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +27,17 @@ public class IcaRepository {
                 final HtmlInput inputTextField = searchForm.getInputByName("q");
                 final HtmlButton searchButton = (HtmlButton) searchForm.getByXPath("//button").get(0);
                 inputTextField.type(product);
-
                 HtmlPage resultPge = searchButton.click();
-                HtmlAnchor productContent = (HtmlAnchor) resultPge.getByXPath("//a[starts-with(@data-test,'fop-product-link')]").get(0);
-                HtmlStrong productPrice = (HtmlStrong) resultPge.getByXPath("//strong[starts-with(@data-test,'fop-price')]").get(0);
+                try{
+                    HtmlAnchor productContent = (HtmlAnchor) resultPge.getByXPath("//a[starts-with(@data-test,'fop-product-link')]").get(0);
+                    HtmlStrong productPrice = (HtmlStrong) resultPge.getByXPath("//strong[starts-with(@data-test,'fop-price')]").get(0);
+                    responseData.put(productContent.getTextContent(),productPrice.getTextContent());
 
-                responseData.put(productContent.getTextContent(),productPrice.getTextContent());
+                } catch(Exception IndexOutOfBoundsException){
+                    System.out.println("EXEPTION IndexOutOfBoundsException");
+                    responseData.put("Ingen sökträff", "-");
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -15,7 +15,7 @@ import java.util.Map;
 @Service
 public class ScrapeService {
     enum Store {
-        ICA, HEMKÖP
+        ICA
     }
 
     final ScrapeRepository scrapeRepository;
@@ -67,8 +67,8 @@ public class ScrapeService {
         return jsonArray;
     }
 
-    private double convertPrice(String textContent) {
-        String cleanPrice = textContent.replaceAll("[^,0-9]", "").replace(",", ".");
-        return Double.parseDouble(cleanPrice);
+    private String convertPrice(String textContent) {
+        return textContent.equals("-") ? "-" :
+                textContent.replaceAll("[^,0-9]", "").replace(",", ".");
     }
 }

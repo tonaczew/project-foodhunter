@@ -16,8 +16,6 @@ import java.util.Map;
 @Repository
 public class HemkopRepository {
 
-    final String url = "https://www.hemkop.se/sok?q=kvarg";
-
     public Map<String, String> webScrapeHemkop(List<String> shoppingList) {
         Map<String, String> responseData = new HashMap<>();
 
