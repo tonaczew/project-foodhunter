@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ScrapeRepository {
@@ -21,10 +22,10 @@ public class ScrapeRepository {
         this.hemkopRepository = hemkopRepository;
     }
 
-    public List<Article> webScrapingIca(List<String> products) {
+    public Map<String, String> webScrapingIca(List<String> products) {
         return icaRepository.webScrapeIca(products);
     }
-    public List<Article> webScrapingHemkop(List<String> products) {
+    public Map<String, String> webScrapingHemkop(List<String> products) {
         return hemkopRepository.webScrapeHemkop(products);
     }
 }

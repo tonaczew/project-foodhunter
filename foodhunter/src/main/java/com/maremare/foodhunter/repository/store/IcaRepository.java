@@ -7,15 +7,17 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class IcaRepository {
 
     final String url = "https://handlaprivatkund.ica.se/stores/1003418/";
 
-    public List<Article> webScrapeIca(List<String> shoppingList) {
-        List<Article> articles = new ArrayList<>();
+    public Map<String, String> webScrapeIca(List<String> shoppingList) {
+        Map<String, String> responseData = new HashMap<>();
         try (final WebClient webClient = new WebClient()) {
             webClient.getOptions().setJavaScriptEnabled(false);
             webClient.getOptions().setCssEnabled(false);
@@ -31,17 +33,12 @@ public class IcaRepository {
                 HtmlAnchor productContent = (HtmlAnchor) resultPge.getByXPath("//a[starts-with(@data-test,'fop-product-link')]").get(0);
                 HtmlStrong productPrice = (HtmlStrong) resultPge.getByXPath("//strong[starts-with(@data-test,'fop-price')]").get(0);
 
-                double cleanedPrice = convertPrice(productPrice.getTextContent());
-                articles.add(new Article(productContent.getTextContent(), cleanedPrice));
+                responseData.put(productContent.getTextContent(),productPrice.getTextContent());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return articles;
+        return responseData;
     }
 
-    private double convertPrice(String textContent) {
-        String cleanPrice = textContent.replaceAll("[^,0-9]", "").replace(",", ".");
-        return Double.parseDouble(cleanPrice);
-    }
 }

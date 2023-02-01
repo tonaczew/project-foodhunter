@@ -9,15 +9,17 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class HemkopRepository {
 
     final String url = "https://www.hemkop.se/sok?q=kvarg";
 
-    public List<Article> webScrapeHemkop(List<String> shoppingList) {
-        List<Article> articles = new ArrayList<>();
+    public Map<String, String> webScrapeHemkop(List<String> shoppingList) {
+        Map<String, String> responseData = new HashMap<>();
 
         String filePath = "C:\\Users\\tonac\\Desktop\\chrome-driver\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", filePath);
@@ -26,7 +28,6 @@ public class HemkopRepository {
         WebDriver driver = new ChromeDriver(chromeOptions);
 
         for (String product : shoppingList) {
-
             driver.get("https://www.hemkop.se/sok?q=" + product);
             String xPathProduct = "//*[@id='__next']/div[1]/div[5]/div/div[2]/div/div[3]/div[1]/div/div[1]/div[2]/div[2]/div/div/a";
             String xPathPrice = "//*[@id=\"__next\"]/div[1]/div[5]/div/div[2]/div/div[3]/div[1]/div/div[1]/div[3]/div/div/h3";
@@ -34,14 +35,8 @@ public class HemkopRepository {
             WebElement article = driver.findElement(By.xpath(xPathProduct));
             WebElement price = driver.findElement(By.xpath(xPathPrice));
 
-            double cleanedPrice = convertPrice(price.getText());
-            articles.add(new Article(article.getText(), cleanedPrice));
+            responseData.put(article.getText(),price.getText());
         }
-        return articles;
-    }
-
-    private double convertPrice(String textContent) {
-        String cleanPrice = textContent.replaceAll("[^,0-9]", "").replace(",", ".");
-        return Double.parseDouble(cleanPrice);
+        return responseData;
     }
 }

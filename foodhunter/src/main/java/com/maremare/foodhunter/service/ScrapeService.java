@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScrapeService {
@@ -26,22 +27,32 @@ public class ScrapeService {
 
     public JSONArray getProducts(List<String> products) {
         List<ShoppingList> shopList = new ArrayList<>();
-        List<Article> articleIca;
-        List<Article> articleHemkop;
+        Map<String, String> articleIca;
+        Map<String, String> articleHemkop;
 
         for (Store store : Store.values()) {
             switch (store.name()) {
                 case "ICA" -> {
                     articleIca = scrapeRepository.webScrapingIca(products);
-                    shopList.add(new ShoppingList(store.name(), articleIca));
+                    List<Article> articleList = createArticleList(store.name(), articleIca);
+                    shopList.add(new ShoppingList(store.name(), articleList));
                 }
                 case "HEMKÖP" -> {
                     articleHemkop = scrapeRepository.webScrapingHemkop(products);
-                    shopList.add(new ShoppingList(store.name(), articleHemkop));
+                    List<Article> articleList = createArticleList(store.name(), articleHemkop);
+                    shopList.add(new ShoppingList(store.name(), articleList));
                 }
             }
         }
         return createJsonObject(shopList);
+    }
+
+    private List<Article> createArticleList(String name, Map<String, String> articleIca) {
+        List<Article> articleList = new ArrayList<>();
+        articleIca.forEach((k,v) -> {
+            articleList.add(new Article(k,convertPrice(v)));
+        });
+        return articleList;
     }
 
     private JSONArray createJsonObject(List<ShoppingList> sl) {
@@ -54,5 +65,10 @@ public class ScrapeService {
         }
         System.out.println(jsonArray);
         return jsonArray;
+    }
+
+    private double convertPrice(String textContent) {
+        String cleanPrice = textContent.replaceAll("[^,0-9]", "").replace(",", ".");
+        return Double.parseDouble(cleanPrice);
     }
 }
