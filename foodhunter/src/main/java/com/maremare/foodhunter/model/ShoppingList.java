@@ -1,6 +1,4 @@
-package com.maremare.foodhunter;
-
-import org.json.JSONObject;
+package com.maremare.foodhunter.model;
 
 import java.util.List;
 

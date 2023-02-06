@@ -1,4 +1,4 @@
-package com.maremare.foodhunter;
+package com.maremare.foodhunter.model;
 
 public class Article {
 
@@ -16,13 +16,5 @@ public class Article {
 
     public String getPrice() {
         return price;
-    }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "productName='" + productName + '\'' +
-                ", price=" + price +
-                '}';
     }
 }

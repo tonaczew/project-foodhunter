@@ -1,17 +1,17 @@
-package com.maremare.foodhunter.repository.store;
+package com.maremare.foodhunter.service.store;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
-public class IcaRepository {
+@Service
+public class IcaScraper {
 
     final String url = "https://handlaprivatkund.ica.se/stores/1003418/";
 
