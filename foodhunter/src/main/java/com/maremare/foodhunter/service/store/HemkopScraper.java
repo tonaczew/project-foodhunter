@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public class HemkopScraper {
 
-    private static final String FILE_PATH = "C:\\Users\\tonac\\Desktop\\chrome-driver\\chromedriver.exe";
+    private static final String FILE_PATH = "${CHROME_DRIVER_FILE_PATH}";
 
     public Map<String, String> webScrapeHemkop(List<String> shoppingList) {
         Map<String, String> responseData = new HashMap<>();
