@@ -1,8 +1,6 @@
 package com.maremare.foodhunter.controller;
 
 import com.maremare.foodhunter.service.ScrapeService;
-import org.json.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,16 +14,15 @@ import java.util.List;
 @RestController
 public class ScrapeController {
 
-    final ScrapeService scrapeService;
+    private final ScrapeService scrapeService;
 
-    @Autowired
     public ScrapeController(ScrapeService scrapeService) {
         this.scrapeService = scrapeService;
     }
 
     @GetMapping("/getPrice")
     public ResponseEntity<String> getPrice(@RequestParam List<String> products) {
-        JSONArray sendToFrontend = scrapeService.getProducts(products);
+        var sendToFrontend = scrapeService.getProducts(products);
         return new ResponseEntity<>(sendToFrontend.toString(), HttpStatus.OK);
     }
 }

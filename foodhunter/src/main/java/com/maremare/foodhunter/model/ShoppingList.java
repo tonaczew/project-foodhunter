@@ -2,32 +2,6 @@ package com.maremare.foodhunter.model;
 
 import java.util.List;
 
-public class ShoppingList {
+public record ShoppingList(String store, List<Article> shoppingList) {
 
-    private String store;
-    private List<Article> shoppingList;
-
-    public ShoppingList() {
-    }
-
-    public ShoppingList(String store, List<Article> shoppingList) {
-        this.store = store;
-        this.shoppingList = shoppingList;
-    }
-
-    public String getStore() {
-        return store;
-    }
-
-    public void setStore(String store) {
-        this.store = store;
-    }
-
-    public List<Article> getShoppingList() {
-        return shoppingList;
-    }
-
-    public void setShoppingList(List<Article> shoppingList) {
-        this.shoppingList = shoppingList;
-    }
 }

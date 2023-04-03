@@ -4,7 +4,6 @@ import com.maremare.foodhunter.model.Article;
 import com.maremare.foodhunter.model.ShoppingList;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,13 +12,12 @@ import java.util.Map;
 
 @Service
 public class ScrapeService {
-    enum Store {
+    private enum Store {
         ICA, HEMKÖP
     }
 
-    final WebScraper webScraper;
+    private final WebScraper webScraper;
 
-    @Autowired
     public ScrapeService(WebScraper webScraper) {
         this.webScraper = webScraper;
     }
@@ -30,36 +28,31 @@ public class ScrapeService {
         Map<String, String> articleHemkop;
 
         for (Store store : Store.values()) {
-            switch (store.name()) {
-                case "ICA" -> {
-                    articleIca = webScraper.webScrapingIca(products);
-                    List<Article> articleList = createArticleList(store.name(), articleIca);
-                    shopList.add(new ShoppingList(store.name(), articleList));
-                }
-                case "HEMKÖP" -> {
-                    articleHemkop = webScraper.webScrapingHemkop(products);
-                    List<Article> articleList = createArticleList(store.name(), articleHemkop);
-                    shopList.add(new ShoppingList(store.name(), articleList));
-                }
+            if (store.name().equals("ICA")) {
+                articleIca = webScraper.webScrapingIca(products);
+                var articleList = createArticleList(articleIca);
+                shopList.add(new ShoppingList(store.name(), articleList));
+            } else if (store.name().equals("HEMKÖP")) {
+                articleHemkop = webScraper.webScrapingHemkop(products);
+                var articleList = createArticleList(articleHemkop);
+                shopList.add(new ShoppingList(store.name(), articleList));
             }
         }
         return createJsonObject(shopList);
     }
 
-    private List<Article> createArticleList(String name, Map<String, String> articleIca) {
+    private List<Article> createArticleList(Map<String, String> articleIca) {
         List<Article> articleList = new ArrayList<>();
-        articleIca.forEach((k, v) -> {
-            articleList.add(new Article(k, convertPrice(v)));
-        });
+        articleIca.forEach((k, v) -> articleList.add(new Article(k, convertPrice(v))));
         return articleList;
     }
 
     private JSONArray createJsonObject(List<ShoppingList> sl) {
-        JSONArray jsonArray = new JSONArray();
+        var jsonArray = new JSONArray();
         sl.forEach(storeList -> {
-            JSONObject jsonArticleObject = new JSONObject();
-            jsonArticleObject.put("store", storeList.getStore());
-            jsonArticleObject.put("shoppingList", storeList.getShoppingList());
+            var jsonArticleObject = new JSONObject();
+            jsonArticleObject.put("store", storeList.store());
+            jsonArticleObject.put("shoppingList", storeList.shoppingList());
             jsonArray.put(jsonArticleObject);
         });
         return jsonArray;
