@@ -1,6 +1,6 @@
 # Project Foodhunter
 
-#### Information
+#### Information 
 
 - Author: Philip Tonaczew
 - Last update: February 9, 2023
