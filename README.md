@@ -15,7 +15,8 @@ Java-based web scraping application that facilitates the creation of a shopping 
 - Download ChromeDriver version 113 from the ChromeDriver downloads page. Make sure to choose the appropriate version for your operating system.
 - You must have the latest version of Google Chrome installed on your machine in order to use this project.
 - Add the ChromeDriver executable to your system PATH. 
-- Clone this repository to your local machine using the command `git clone https://github.com/tonaczew/project-foodhunter.git`.
+- Clone this repository to your local machine using the command 
+`git clone https://github.com/tonaczew/project-foodhunter.git`.
 - Install the project's dependencies using Maven by running the command `mvn install` in the project's root directory. This will download and install all of the dependencies specified in the pom.xml file.
 
 
